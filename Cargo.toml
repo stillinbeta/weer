@@ -1,0 +1,21 @@
+[package]
+name = "weer"
+version = "0.1.0"
+edition = "2021"
+authors = ["Gael (@Gael-devv)"]
+description = "cli that gives you the weather"
+license = "MPL-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace]
+members = [
+    "weer_api",
+]
+
+[dependencies]
+weer_api = { path = "weer_api" }
+clap = { version = "3.1.15", features = ["derive"] }
+exitcode = "1.1.2"
+confy = "0.4.0"
+artem = "1.1.5"
