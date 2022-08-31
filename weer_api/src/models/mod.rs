@@ -6,6 +6,7 @@ pub use forecast::*;
 
 use serde::{Serialize, Deserialize};
 use chrono::{DateTime, TimeZone, Utc, FixedOffset, ParseResult};
+use std::fmt::{self, Display};
 
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -102,11 +103,22 @@ pub struct Alerts {
 
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub struct Coords {
+    pub lat: f32,
+    pub lon: f32
+}
+
+impl Display for Coords {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}, {}", self.lat, self.lon)
+    }
+}
+
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Location {
-    #[serde(rename = "lat")]
-    pub latitude: f32,
-    #[serde(rename = "lon")]
-    pub longitude: f32,
+    #[serde(flatten)]
+    pub coords: Coords,
     pub name: String,
     pub region: String,
     pub country: String,
