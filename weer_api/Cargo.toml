@@ -7,6 +7,7 @@ license = "MIT"
 readme = "README.md"
 keywords = ["weather"]
 categories = ["api-bindings"]
+repository = "https://github.com/Gael-devv/weer/weer_api"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
