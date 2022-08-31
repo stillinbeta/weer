@@ -15,7 +15,13 @@ members = [
 
 [dependencies]
 weer_api = { path = "weer_api" }
-clap = { version = "3.1.15", features = ["derive"] }
+clap = { version = "3.2.17", features = ["cargo"] }
+serde = { version = "1.0.141", features = ["derive"] }
+prettytable-rs = "0.9.0"
+serde_json = "1.0"
 exitcode = "1.1.2"
 confy = "0.4.0"
 artem = "1.1.5"
+ureq = "2.4.0"
+image = "0.24.2"
+colored = "2.0.0"
