@@ -53,3 +53,6 @@ weer_api = "0.1.0"
 > 
 > assert!(result.is_ok())
 > ```
+
+## License
+- [MIT](LICENSE)
