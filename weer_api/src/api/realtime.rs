@@ -22,7 +22,7 @@ impl<'a> RealtimeApi<'a> {
     /// Set up the query
     /// 
     /// Query parameter based on which data is sent back
-    pub fn query(&mut self, query: Query) -> &mut Self {
+    pub fn query(mut self, query: Query) -> Self {
         self.query = Some(query);
         self
     }
@@ -30,7 +30,7 @@ impl<'a> RealtimeApi<'a> {
     /// Set up Air Quality Data
     /// 
     /// Air quality data is not passed by default.
-    pub fn aqi(&mut self) -> &mut Self {
+    pub fn aqi(mut self) -> Self {
         self.aqi = true;
         self
     }
@@ -38,7 +38,7 @@ impl<'a> RealtimeApi<'a> {
     /// Set up language 
     /// 
     /// `condition:text` field in API in the desired language
-    pub fn lang(&mut self, lang: Language) -> &mut Self {
+    pub fn lang(mut self, lang: Language) -> Self {
         self.lang = Some(lang);
         self
     }

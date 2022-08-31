@@ -40,7 +40,7 @@ where
     /// Set up the query
     /// 
     /// Query parameter based on which data is sent back
-    pub fn query(&mut self, query: Query) -> &mut Self {
+    pub fn query(mut self, query: Query) -> Self {
         self.query = Some(query);
         self
     }
@@ -50,7 +50,7 @@ where
     /// Days parameter value ranges between 1 and 14. e.g: days=5
     /// 
     /// If no days parameter is provided then only today's weather is returned. 
-    pub fn days(&mut self, days: u8) -> &mut Self {
+    pub fn days(mut self, days: u8) -> Self {
         self.days = Some(days);
         self
     }
@@ -58,7 +58,7 @@ where
     /// Set up a datetime
     /// 
     /// `dt` should be between today and next 14 day 
-    pub fn dt(&mut self, dt: DateTime<Tz>) -> &mut Self {
+    pub fn dt(mut self, dt: DateTime<Tz>) -> Self {
         self.dt = Some(dt);
         self
     }
@@ -66,13 +66,13 @@ where
     /// Set up use hour
     /// 
     /// Time is extracted from dt
-    pub fn hour(&mut self) -> &mut Self {
+    pub fn hour(mut self) -> Self {
         self.hour = true;
         self
     }
 
     /// Set up alerts
-    pub fn alerts(&mut self) -> &mut Self {
+    pub fn alerts(mut self) -> Self {
         self.alerts = true;
         self
     }
@@ -80,7 +80,7 @@ where
     /// Set up Air Quality Data
     /// 
     /// Air quality data is not passed by default.
-    pub fn aqi(&mut self) -> &mut Self {
+    pub fn aqi(mut self) -> Self {
         self.aqi = true;
         self
     }
@@ -88,7 +88,7 @@ where
     /// Set up language 
     /// 
     /// `condition:text` field in API in the desired language
-    pub fn lang(&mut self, lang: Language) -> &mut Self {
+    pub fn lang(mut self, lang: Language) -> Self {
         self.lang = Some(lang);
         self
     }

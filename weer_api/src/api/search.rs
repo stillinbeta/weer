@@ -18,7 +18,7 @@ impl<'a> SearchApi<'a> {
     /// Set up the query
     /// 
     /// Query parameter based on which data is sent back
-    pub fn query(&mut self, query: Query) -> &mut Self {
+    pub fn query(mut self, query: Query) -> Self {
         self.query = Some(query);
         self
     }
