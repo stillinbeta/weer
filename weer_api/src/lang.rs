@@ -2,8 +2,7 @@ use std::fmt::{self, Display};
 use serde::{Serialize, Deserialize};
 
 
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-#[serde(tag="lang")]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Clone, Copy)]
 pub enum Language {
     #[serde(rename="ar")]
     Arabic,
@@ -89,7 +88,7 @@ pub enum Language {
 
 impl Language {
     pub fn new(lang: &str) -> Result<Self, serde_json::Error> {
-        serde_json::from_value(serde_json::json!({"lang": lang}))
+        serde_json::from_value(serde_json::json![lang])
     }
 
     pub fn content(&self) -> &str {
