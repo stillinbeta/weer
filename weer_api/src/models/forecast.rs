@@ -12,6 +12,12 @@ impl Temperature {
     pub fn max(&self) -> f32 { self.1 }
 }
 
+impl Display for Temperature {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "min: {}\n max: {}", self.min(), self.max())
+    }
+}
+
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Day {
@@ -84,10 +90,10 @@ impl Display for MoonPhase {
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Astro {
-    sunrise: String,
-    sunset: String,
-    moonrise: String,
-    moonset: String,
+    pub sunrise: String,
+    pub sunset: String,
+    pub moonrise: String,
+    pub moonset: String,
     pub moon_phase: MoonPhase,
     pub moon_illumination: String
 }
@@ -150,27 +156,15 @@ pub struct Hour {
 
 impl Hour {
     pub fn will_it_rain(&self) -> bool {
-        match self.will_it_rain {
-            0 => false,
-            1 => true,
-            _ => unreachable!()
-        }
+        self.will_it_rain == 1
     }
 
     pub fn will_it_snow(&self) -> bool {
-        match self.will_it_snow {
-            0 => false,
-            1 => true,
-            _ => unreachable!()
-        }
+        self.will_it_snow == 1
     }
 
     pub fn is_day(&self) -> bool {
-        match self.is_day {
-            0 => false,
-            1 => true,
-            _ => unreachable!()
-        }
+        self.is_day == 1
     }
 }
 

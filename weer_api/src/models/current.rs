@@ -40,11 +40,7 @@ impl Current {
     }
 
     pub fn is_day(&self) -> bool {
-        match self.is_day {
-            0 => false,
-            1 => true,
-            _ => unreachable!()
-        }
+        self.is_day == 1
     }
 }
 
