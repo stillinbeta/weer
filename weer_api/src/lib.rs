@@ -4,7 +4,7 @@
 
 //! ## Usage
 //! Put this in your Cargo.toml:
-//! ```
+//! ```toml
 //! [dependencies]
 //! weer_api = "0.1.0"
 //! ```
@@ -12,7 +12,7 @@
 //! ### Examples
 //! 
 //! #### Get forecast
-//! ```
+//! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
 //! 
 //! # fn main() {
@@ -23,12 +23,12 @@
 //!     .lang(Language::Spanish)
 //!     .call();
 //! 
-//! assert!(result.is_ok())
+//! assert!(result.is_ok());
 //! # }
 //! ```
 //! 
 //! #### Get future 
-//! ```
+//! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
 //! 
 //! # fn main() {
@@ -39,12 +39,12 @@
 //!     .lang(Language::Spanish)
 //!     .call();
 //! 
+//! assert!(result.is_ok());
 //! # }
-//! assert!(result.is_ok())
 //! ```
 //! 
 //! #### Get history
-//! ```
+//! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
 //! 
 //! # fn main() {
@@ -55,8 +55,8 @@
 //!     .hour()
 //!     .call();
 //! 
-//! # }
 //! assert!(result.is_ok())
+//! # }
 //! ```
 
 
@@ -91,7 +91,7 @@ impl Client {
     /// The `https` parameter if set to true it will cause the client to make an https request instead of an http request.
     /// 
     /// # Example: 
-    /// ```
+    /// ```no_run
     /// use weer_api::Client;
     /// 
     /// let client = Client::new("api_key", true);
@@ -121,7 +121,7 @@ impl Client {
     /// This returns upto next 14 day weather forecast and weather alert. The data is returned as a Forecast Object. 
     /// 
     /// ## Example:
-    /// ```
+    /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
     /// 
     /// let client = Client::new("api_key", true);
@@ -145,7 +145,7 @@ impl Client {
     /// This returns weather in a 3 hourly interval in future for a date between 14 days and 300 days from today in the future.
     /// 
     /// ## Example:
-    /// ```
+    /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
     /// 
     /// let client = Client::new("api_key", true);
@@ -169,7 +169,7 @@ impl Client {
     /// This returns historical weather for a date on or after 1st Jan, 2010. The data is returned as a Forecast Object. 
     /// 
     /// ## Example:
-    /// ```
+    /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
     /// 
     /// let client = Client::new("api_key", true);
@@ -193,7 +193,7 @@ impl Client {
     /// Use to get up to date current weather information. The data is returned as a Current Object. 
     /// 
     /// ## Example:
-    /// ```
+    /// ```no_run
     /// use weer_api::*;
     /// 
     /// let client = Client::new("api_key", true);
@@ -213,7 +213,7 @@ impl Client {
     /// This returns matching cities and towns as an array of Location object
     /// 
     /// ## Example:
-    /// ```
+    /// ```no_run
     /// use weer_api::*; 
     /// 
     /// let client = Client::new("api_key", true);
@@ -225,6 +225,10 @@ impl Client {
     /// ```
     pub fn search(&self) -> SearchApi {
         SearchApi::new(&self)
+    }
+
+    pub fn conditions(&self) -> Result<Vec<Condition>, ureq::Error> {
+        Ok(self.agent.get("https://www.weatherapi.com/docs/weather_conditions.json").call()?.into_json()?)
     }
 }
 
