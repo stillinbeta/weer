@@ -25,9 +25,9 @@ pub fn build<'a>() -> Command<'a> {
 
 fn applet_commands<'a>() -> [Command<'a>; 4] {
     [
-        Command::new("search"),
         forecast(),
         history(),
+        Command::new("search"),
         Command::new("future")
             .arg(arg!(--dt <date>)),
     ]
