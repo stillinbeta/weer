@@ -176,7 +176,7 @@ impl Client {
     /// let result = client.history()
     ///     .query(Query::Ip(None))
     ///     .dt(Utc.ymd(2022, 07, 21).and_hms(0, 0, 0))
-    ///     .hour()
+    ///     .hour(true)
     ///     .call();
     /// 
     /// assert!(result.is_ok())
@@ -272,7 +272,7 @@ mod tests {
         let result = client.history()
             .query(Query::Ip(None))
             .dt(Utc.ymd(2022, 07, 21).and_hms(0, 0, 0))
-            .hour()
+            .hour(true)
             .call();
         
         assert!(result.is_ok())
