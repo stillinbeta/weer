@@ -28,7 +28,7 @@ pub fn matches_handler(app: &App) -> Result<(), Box<dyn Error>> {
     match app.matches.subcommand() {
         Some(("forecast", sub_m)) => forecast(sub_m, &out, &app, q),
         Some(("history", sub_m)) => history(sub_m, &out, &app, q),
-        // Some(("search", _sub_m)) => todo!(),
+        Some(("search", _)) => search(&out, &app, q),
         // Some(("future", _sub_m)) => todo!(),
         Some((&_, _)) => todo!(),
         None => Ok(())
@@ -108,5 +108,20 @@ fn history(sub_m: &ArgMatches, out: &io::Stdout, app: &App, q: Query) -> Result<
         table.print(&mut out)?;
     }
 
+    Ok(())
+}
+
+fn search(out: &io::Stdout, app: &App, q: Query) -> Result<(), Box<dyn Error>> {
+    let mut out = out.lock();
+    
+    let resp = app.client.search()
+        .query(q)
+        .call()?;
+    
+    for location in resp {
+        writeln!(out, "{}: {}", "Location".bold(), location.name.italic())?;
+        tables::location_table(location).print(&mut out)?;
+    }
+    
     Ok(())
 }
