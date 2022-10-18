@@ -1,5 +1,7 @@
-mod cli;
+mod cmd;
 mod handler;
+mod image;
+mod tables;
 
 use clap::ArgMatches;
 use std::{error::Error};
@@ -42,7 +44,7 @@ pub struct App {
 
 impl App {
     pub fn new() -> Self {
-        let cmd = cli::build();
+        let cmd = cmd::build();
         let agent = AgentBuilder::new().build();
         let cfg: Config = confy::load("weer").unwrap();
         let client = Client::new(&cfg.api_key, true);
