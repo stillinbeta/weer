@@ -36,7 +36,7 @@ where
     /// Set up the query
     /// 
     /// Query parameter based on which data is sent back
-    pub fn query(mut self, query: Query) -> Self {
+    pub fn query(&mut self, query: Query) -> &mut Self {
         self.query = Some(query);
         self
     }
@@ -44,7 +44,7 @@ where
     /// Set up a datetime
     /// 
     /// `dt` should be on or after 1st Jan, 2010
-    pub fn dt(mut self, dt: DateTime<Tz>) -> Self {
+    pub fn dt(&mut self, dt: DateTime<Tz>) -> &mut Self {
         self.dt = Some(dt);
         self
     }
@@ -52,7 +52,7 @@ where
     /// Set up a end datetime
     /// 
     /// `end_dt` should be on or after 1st Jan, 2010 and should be greater than `dt` parameter and difference should not be more than 30 days between the two dates.
-    pub fn end_dt(mut self, end_dt: DateTime<Tz>) -> Self {
+    pub fn end_dt(&mut self, end_dt: DateTime<Tz>) -> &mut Self {
         self.end_dt = Some(end_dt);
         self
     }
@@ -60,15 +60,15 @@ where
     /// Set up use hour
     /// 
     /// Time is extracted from dt
-    pub fn hour(mut self) -> Self {
-        self.hour = true;
+    pub fn hour(&mut self, hour: bool) -> &mut Self {
+        self.hour = hour;
         self
     }
 
     /// Set up language 
     /// 
     /// `condition:text` field in API in the desired language
-    pub fn lang(mut self, lang: Language) -> Self {
+    pub fn lang(&mut self, lang: Language) -> &mut Self {
         self.lang = Some(lang);
         self
     }

@@ -26,7 +26,7 @@ where
             &self.params()
         )?;
         
-        for _ in 1..2 {
+        for _ in 1..3 {
             match client.agent.request_url("GET", &url).call() {
                 Err(Error::Status(503, r)) | Err(Error::Status(429, r)) => {
                     let retry: Option<u64> = r.header("retry-after")

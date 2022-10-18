@@ -31,7 +31,7 @@ where
     /// Set up the query
     /// 
     /// Query parameter based on which data is sent back
-    pub fn query(mut self, query: Query) -> Self {
+    pub fn query(&mut self, query: Query) -> &mut Self {
         self.query = Some(query);
         self
     }
@@ -39,7 +39,7 @@ where
     /// Set up a datetime
     /// 
     /// `dt` should be between 14 days and 300 days from today in the future
-    pub fn dt(mut self, dt: DateTime<Tz>) -> Self {
+    pub fn dt(&mut self, dt: DateTime<Tz>) -> &mut Self {
         self.dt = Some(dt);
         self
     }
@@ -47,7 +47,7 @@ where
     /// Set up language 
     /// 
     /// `condition:text` field in API in the desired language
-    pub fn lang(mut self, lang: Language) -> Self {
+    pub fn lang(&mut self, lang: Language) -> &mut Self {
         self.lang = Some(lang);
         self
     }
