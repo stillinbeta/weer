@@ -10,7 +10,7 @@ use ureq::{Agent, AgentBuilder};
 use weer_api::{Client, Language};
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Config {
     lang: Option<Language>,
     api_key: String
@@ -34,7 +34,7 @@ impl App {
     pub fn new() -> Self {
         let cmd = cmd::build();
         let agent = AgentBuilder::new().build();
-        let cfg: Config = confy::load("weer").unwrap();
+        let cfg: Config = confy::load("weer", "config").unwrap();
         let client = Client::new(&cfg.api_key, true);
 
         Self {
