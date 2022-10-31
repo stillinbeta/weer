@@ -29,6 +29,19 @@ pub fn matches_handler(app: &App) -> Result<(), Box<dyn Error>> {
         Some(("forecast", sub_m)) => forecast(sub_m, &out, &app, q),
         Some(("history", sub_m)) => history(sub_m, &out, &app, q),
         Some(("search", _)) => search(&out, &app, q),
+        Some(("config", sub_m)) => {
+            let mut cfg = app.cfg.clone();
+            if let Some(api_key) = sub_m.get_one::<String>("api_key") {
+                cfg.api_key = api_key.clone()
+            }
+
+            if let Some(lang) = sub_m.get_one::<String>("lang") {
+                cfg.lang = Some(serde_json::from_value(serde_json::json![lang]).unwrap())
+            }
+
+            confy::store("weer", "config", cfg)?;
+            Ok(())
+        }
         // Some(("future", _sub_m)) => todo!(),
         Some((&_, _)) => todo!(),
         None => Ok(())
