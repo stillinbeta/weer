@@ -12,25 +12,13 @@ use weer_api::{Client, Language};
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
-    lang: Option<String>,
+    lang: Option<Language>,
     api_key: String
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self { lang: None, api_key: "b406c89026bf4209b5511231222906".to_string() }
-        
-        // panic!("app not configured")
-    }
-}
-
-impl Config {
-    pub fn lang(&self) -> Option<Language> {
-        if let Some(l) = &self.lang {
-            Some(Language::new(l).unwrap())
-        } else {
-            None
-        }
     }
 }
 

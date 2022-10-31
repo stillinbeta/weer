@@ -57,7 +57,7 @@ fn forecast(sub_m: &ArgMatches, out: &io::Stdout, app: &App, q: Query) -> Result
         .aqi(*aqi)
         .alerts(*alerts);
 
-    if let Some(lang) = app.cfg.lang() {
+    if let Some(lang) = app.cfg.lang {
         req.lang(lang);
     }
 
