@@ -299,8 +299,15 @@ mod tests {
 
     #[test]
     fn lang() {
-        let l = Language::new("bg").unwrap();
-        assert_eq!(Language::Bulgarian, l)
+        #[derive(Debug, serde::Serialize, serde::Deserialize)]
+        struct Model {
+            lang: Language
+        }
+
+        let s = r#"{"lang": "bg"}"#;
+        let m: Model = serde_json::from_str(s).unwrap();
+        assert_eq!(&Language::Bulgarian, &m.lang);
+        assert!(serde_json::to_string(&m).is_ok());
     }
 
     #[test]

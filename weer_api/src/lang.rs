@@ -87,10 +87,6 @@ pub enum Language {
 }
 
 impl Language {
-    pub fn new(lang: &str) -> Result<Self, serde_json::Error> {
-        serde_json::from_value(serde_json::json![lang])
-    }
-
     pub fn content(&self) -> &str {
         match self {
             Language::Arabic => "ar",
