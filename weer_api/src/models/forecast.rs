@@ -95,7 +95,7 @@ pub struct Astro {
     pub moonrise: String,
     pub moonset: String,
     pub moon_phase: MoonPhase,
-    pub moon_illumination: String
+    pub moon_illumination: u8,
 }
 
 impl Astro {
