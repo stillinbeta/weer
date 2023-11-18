@@ -1,5 +1,5 @@
 //! A wrapper library for using [Weather API](https://www.weatherapi.com/)
-//! 
+//!
 //! *This is an unofficial library*
 
 //! ## Usage
@@ -10,11 +10,11 @@
 //! ```
 
 //! ### Examples
-//! 
+//!
 //! #### Get forecast
 //! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
-//! 
+//!
 //! # fn main() {
 //! let client = Client::new("api_key", true);
 //! let result = client.forecast()
@@ -22,15 +22,15 @@
 //!     .dt(Utc.ymd(2022, 08, 21).and_hms(0, 0, 0))
 //!     .lang(Language::Spanish)
 //!     .call();
-//! 
+//!
 //! assert!(result.is_ok());
 //! # }
 //! ```
-//! 
-//! #### Get future 
+//!
+//! #### Get future
 //! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
-//! 
+//!
 //! # fn main() {
 //! let client = Client::new("api_key", true);
 //! let result = client.future()
@@ -38,15 +38,15 @@
 //!     .dt(Utc.ymd(2022, 09, 21).and_hms(0, 0, 0))
 //!     .lang(Language::Spanish)
 //!     .call();
-//! 
+//!
 //! assert!(result.is_ok());
 //! # }
 //! ```
-//! 
+//!
 //! #### Get history
 //! ```no_run
 //! use weer_api::{*, chrono::{Utc, TimeZone}};
-//! 
+//!
 //! # fn main() {
 //! let client = Client::new("api_key", true);
 //! let result = client.history()
@@ -54,7 +54,7 @@
 //!     .dt(Utc.ymd(2022, 07, 21).and_hms(0, 0, 0))
 //!     .hour()
 //!     .call();
-//! 
+//!
 //! assert!(result.is_ok())
 //! # }
 //! ```
@@ -87,19 +87,19 @@ pub struct Client {
 
 impl Client {
     /// Creates a new client
-    /// 
+    ///
     /// The `https` parameter if set to true it will cause the client to make an https request instead of an http request.
-    /// 
-    /// # Example: 
+    ///
+    /// # Example:
     /// ```no_run
     /// use weer_api::Client;
-    /// 
+    ///
     /// let client = Client::new("api_key", true);
     /// ```
     pub fn new(api_key: &str, https: bool) -> Self {
         let user_agent = format!(
-            "{name} ({repo} {version})", 
-            name = env!("CARGO_PKG_NAME"), 
+            "{name} ({repo} {version})",
+            name = env!("CARGO_PKG_NAME"),
             repo = env!("CARGO_PKG_REPOSITORY"),
             version = env!("CARGO_PKG_VERSION"),
         );
@@ -109,7 +109,7 @@ impl Client {
             .https_only(https)
             .build();
 
-        Self { 
+        Self {
             api_key: api_key.to_string(),
             agent,
             https
@@ -117,23 +117,23 @@ impl Client {
     }
 
     /// Function to get forecast
-    /// 
-    /// This returns upto next 14 day weather forecast and weather alert. The data is returned as a Forecast Object. 
-    /// 
+    ///
+    /// This returns upto next 14 day weather forecast and weather alert. The data is returned as a Forecast Object.
+    ///
     /// ## Example:
     /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
-    /// 
+    ///
     /// let client = Client::new("api_key", true);
     /// let result = client.forecast()
     ///     .query(Query::City("London".to_string()))
     ///     .dt(Utc.ymd(2022, 08, 21).and_hms(0, 0, 0))
     ///     .lang(Language::Spanish)
     ///     .call();
-    /// 
+    ///
     /// assert!(result.is_ok())
     /// ```
-    pub fn forecast<Tz: chrono::TimeZone>(&self) -> ForecastApi<Tz> 
+    pub fn forecast<Tz: chrono::TimeZone>(&self) -> ForecastApi<Tz>
     where
         Tz::Offset: Display
     {
@@ -141,23 +141,23 @@ impl Client {
     }
 
     /// Function to get future
-    /// 
+    ///
     /// This returns weather in a 3 hourly interval in future for a date between 14 days and 300 days from today in the future.
-    /// 
+    ///
     /// ## Example:
     /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
-    /// 
+    ///
     /// let client = Client::new("api_key", true);
     /// let result = client.future()
     ///     .query(Query::Coords(48.8567, 2.3508))
     ///     .dt(Utc.ymd(2022, 09, 21).and_hms(0, 0, 0))
     ///     .lang(Language::Spanish)
     ///     .call();
-    /// 
+    ///
     /// assert!(result.is_ok())
     /// ```
-    pub fn future<Tz: chrono::TimeZone>(&self) -> FutureApi<Tz> 
+    pub fn future<Tz: chrono::TimeZone>(&self) -> FutureApi<Tz>
     where
         Tz::Offset: Display
     {
@@ -165,20 +165,20 @@ impl Client {
     }
 
     /// Function to get history
-    /// 
-    /// This returns historical weather for a date on or after 1st Jan, 2010. The data is returned as a Forecast Object. 
-    /// 
+    ///
+    /// This returns historical weather for a date on or after 1st Jan, 2010. The data is returned as a Forecast Object.
+    ///
     /// ## Example:
     /// ```no_run
     /// use weer_api::{*, chrono::{Utc, TimeZone}};
-    /// 
+    ///
     /// let client = Client::new("api_key", true);
     /// let result = client.history()
     ///     .query(Query::Ip(None))
     ///     .dt(Utc.ymd(2022, 07, 21).and_hms(0, 0, 0))
     ///     .hour(true)
     ///     .call();
-    /// 
+    ///
     /// assert!(result.is_ok())
     /// ```
     pub fn history<Tz: chrono::TimeZone>(&self) -> HistoryApi<Tz>
@@ -189,19 +189,19 @@ impl Client {
     }
 
     /// Function to get realtime
-    /// 
-    /// Use to get up to date current weather information. The data is returned as a Current Object. 
-    /// 
+    ///
+    /// Use to get up to date current weather information. The data is returned as a Current Object.
+    ///
     /// ## Example:
     /// ```no_run
     /// use weer_api::*;
-    /// 
+    ///
     /// let client = Client::new("api_key", true);
     /// let result = client.realtime()
     ///     .query(Query::Ip(None))
     ///     .lang(Language::Spanish)
     ///     .call();
-    /// 
+    ///
     /// assert!(result.is_ok())
     /// ```
     pub fn realtime(&self) -> RealtimeApi {
@@ -209,18 +209,18 @@ impl Client {
     }
 
     /// Function to get realtime
-    /// 
+    ///
     /// This returns matching cities and towns as an array of Location object
-    /// 
+    ///
     /// ## Example:
     /// ```no_run
-    /// use weer_api::*; 
-    /// 
+    /// use weer_api::*;
+    ///
     /// let client = Client::new("api_key", true);
     /// let result = client.search()
     ///     .query(Query::Ip(None))
     ///     .call();
-    /// 
+    ///
     /// assert!(result.is_ok())
     /// ```
     pub fn search(&self) -> SearchApi {
@@ -237,7 +237,7 @@ mod tests {
     use crate::*;
     use chrono::{Utc, TimeZone};
 
-    fn get_client() -> Client {        
+    fn get_client() -> Client {
         let api_key = option_env!("API_KEY").unwrap();
         Client::new(api_key, true)
     }
@@ -247,7 +247,7 @@ mod tests {
         let client = get_client();
         let result = client.forecast()
             .query(Query::Ip(None))
-            .dt(Utc.ymd(2022, 08, 21).and_hms(0, 0, 0))
+            .dt(Utc.with_ymd_and_hms(2022, 08, 21, 0, 0, 0).earliest().unwrap())
             .lang(Language::Spanish)
             .call();
 
@@ -259,7 +259,7 @@ mod tests {
         let client = get_client();
         let result = client.future()
             .query(Query::Ip(None))
-            .dt(Utc.ymd(2022, 09, 21).and_hms(0, 0, 0))
+            .dt(Utc.with_ymd_and_hms(2022, 09, 21, 0, 0, 0).earliest().unwrap())
             .lang(Language::Spanish)
             .call();
 
@@ -271,10 +271,10 @@ mod tests {
         let client = get_client();
         let result = client.history()
             .query(Query::Ip(None))
-            .dt(Utc.ymd(2022, 07, 21).and_hms(0, 0, 0))
+            .dt(Utc.with_ymd_and_hms(2022, 07, 21, 0, 0, 0).earliest().unwrap())
             .hour(true)
             .call();
-        
+
         assert!(result.is_ok())
     }
 

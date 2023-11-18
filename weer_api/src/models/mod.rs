@@ -5,7 +5,7 @@ mod forecast;
 pub use forecast::*;
 
 use serde::{Serialize, Deserialize};
-use chrono::{DateTime, TimeZone, Utc, FixedOffset, ParseResult};
+pub use chrono::{DateTime, TimeZone, FixedOffset, ParseResult, NaiveDate, NaiveDateTime, Local};
 use std::fmt::{self, Display};
 
 
@@ -19,22 +19,27 @@ pub type Future = History;
 
 
 pub trait Date {
-    fn _date_from_str(&self, s: &str) -> ParseResult<DateTime<Utc>> {
-        Utc.datetime_from_str(s, "%Y-%m-%d")
+    fn _date_from_str(&self, s: &str) -> ParseResult<NaiveDate> {
+        NaiveDate::parse_from_str(s, "%Y-%m-%d")
     }
 
-    fn date(&self) -> DateTime<Utc>;
-    fn date_epoch(&self) -> DateTime<Utc>;
+    fn date(&self) -> NaiveDate;
+    fn date_epoch(&self) -> NaiveDate;
 }
 
 
 pub trait Time {
-    fn _time_from_str(&self, s: &str) -> ParseResult<DateTime<Utc>> {
-        Utc.datetime_from_str(s, "%Y-%m-%d %H:%M")
+    fn _time_from_str(&self, s: &str) -> ParseResult<NaiveDateTime> {
+        NaiveDateTime::parse_from_str(s, "%Y-%m-%d %H:%M")
     }
-    
-    fn time(&self) -> DateTime<Utc>;
-    fn time_epoch(&self) -> DateTime<Utc>;
+
+    fn _local_time_from_str(&self, s: &str) -> ParseResult<DateTime<Local>> {
+        let dt = self._time_from_str(s)?;
+        Ok(Local.from_local_datetime(&dt).earliest().unwrap())
+    }
+
+    fn time(&self) -> DateTime<Local>;
+    fn time_epoch(&self) -> DateTime<Local>;
 }
 
 
@@ -130,11 +135,11 @@ pub struct Location {
 }
 
 impl Time for Location {
-    fn time(&self) -> DateTime<Utc> {
-        self._time_from_str(&self.localtime.as_ref().unwrap()).unwrap()
+    fn time(&self) -> DateTime<Local> {
+        self._local_time_from_str(self.localtime.as_ref().unwrap()).unwrap()
     }
 
-    fn time_epoch(&self) -> DateTime<Utc> {
-        Utc.timestamp(self.localtime_epoch.unwrap(), 0)
+    fn time_epoch(&self) -> DateTime<Local> {
+        Local.timestamp_opt(self.localtime_epoch.unwrap(), 0).unwrap()
     }
 }
