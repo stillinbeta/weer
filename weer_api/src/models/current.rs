@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use chrono::{DateTime, TimeZone, Utc};
+use chrono::{DateTime, TimeZone, Utc, NaiveDateTime};
 
 use super::{Condition, AirQuality, Location};
 
@@ -31,12 +31,12 @@ pub struct Current {
 }
 
 impl Current {
-    pub fn last_updated(&self) -> DateTime<Utc> {
-        Utc.datetime_from_str(&self.last_updated, "%Y-%m-%d %H:%M").unwrap()
+    pub fn last_updated(&self) -> NaiveDateTime {
+        NaiveDateTime::parse_from_str(&self.last_updated,  "%Y-%m-%d %H:%M").unwrap()
     }
 
     pub fn last_updated_epoch(&self) -> DateTime<Utc> {
-        Utc.timestamp(self.last_updated_epoch, 0)
+        Utc.timestamp_opt(self.last_updated_epoch, 0).unwrap()
     }
 
     pub fn is_day(&self) -> bool {

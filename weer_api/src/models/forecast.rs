@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use serde::{Serialize, Deserialize};
-use chrono::{DateTime, TimeZone, Utc};
+use chrono::{DateTime, TimeZone, NaiveTime, Local, NaiveDate};
 
 use super::{Current, Location, Alerts, AirQuality, Condition, Date, Time};
 
@@ -99,20 +99,20 @@ pub struct Astro {
 }
 
 impl Astro {
-    pub fn sunrise(&self) -> DateTime<Utc> {
-        Utc.datetime_from_str(&self.sunrise, "%m:%d %p").unwrap()
+    pub fn sunrise(&self) -> NaiveTime {
+        NaiveTime::parse_from_str(&self.sunrise, "%m:%d %p").unwrap()
     }
 
-    pub fn sunset(&self) -> DateTime<Utc> {
-        Utc.datetime_from_str(&self.sunset, "%m:%d %p").unwrap()
+    pub fn sunset(&self) -> NaiveTime {
+        NaiveTime::parse_from_str(&self.sunrise, "%m:%d %p").unwrap()
     }
 
-    pub fn moonrise(&self) -> DateTime<Utc> {
-        Utc.datetime_from_str(&self.moonrise, "%m:%d %p").unwrap()
+    pub fn moonrise(&self) -> NaiveTime {
+        NaiveTime::parse_from_str(&self.sunrise, "%m:%d %p").unwrap()
     }
 
-    pub fn moonset(&self) -> DateTime<Utc> {
-        Utc.datetime_from_str(&self.moonset, "%m:%d %p").unwrap()
+    pub fn moonset(&self) -> NaiveTime {
+        NaiveTime::parse_from_str(&self.sunrise, "%m:%d %p").unwrap()
     }
 }
 
@@ -169,12 +169,12 @@ impl Hour {
 }
 
 impl Time for Hour {
-    fn time(&self) -> DateTime<Utc> {
-        self._time_from_str(&self.time).unwrap()
+    fn time(&self) -> DateTime<Local> {
+        self._local_time_from_str(&self.time).unwrap()
     }
 
-    fn time_epoch(&self) -> DateTime<Utc> {
-        Utc.timestamp(self.time_epoch, 0)
+    fn time_epoch(&self) -> DateTime<Local> {
+        Local.timestamp_opt(self.time_epoch, 0).unwrap()
     }
 }
 
@@ -189,12 +189,12 @@ pub struct ForecastDay {
 }
 
 impl Date for ForecastDay {
-    fn date(&self) -> DateTime<Utc> {
+    fn date(&self) -> NaiveDate {
         self._date_from_str(&self.date).unwrap()
     }
 
-    fn date_epoch(&self) -> DateTime<Utc> {
-        Utc.timestamp(self.date_epoch, 0)
+    fn date_epoch(&self) -> NaiveDate {
+        Local.timestamp_opt(self.date_epoch, 0).unwrap().date_naive()
     }
 }
 
