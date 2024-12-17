@@ -88,6 +88,18 @@ impl Display for MoonPhase {
 }
 
 
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub struct Astronomy {
+    pub location: Location,
+    pub astronomy: _Astronomy
+}
+
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub struct _Astronomy {
+    pub astro: Astro,
+}
+
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Astro {
     pub sunrise: String,
